@@ -8,12 +8,13 @@ class Header extends React.Component {
     render() {
         const {
             navigationOpen,
-            toggleNavigation
+            title,
+            toggleNavigation,
         } = this.props
 
         return (
             <AppBar
-                title="Title"
+                title={title}
                 iconClassNameRight="muidocs-icon-navigation-expand-more"
                 onLeftIconButtonTouchTap={() => {
                     console.log("Header - onLeftIconButtonTouchTap", navigationOpen)

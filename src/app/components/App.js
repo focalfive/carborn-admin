@@ -7,7 +7,11 @@ import * as actions from '../actions'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
-const muiTheme = getMuiTheme();
+const muiTheme = getMuiTheme()
+
+const contentsStyle = {
+    padding: 10,
+}
 
 class App extends Component {
 
@@ -23,9 +27,9 @@ class App extends Component {
         return (
             <MuiThemeProvider muiTheme={muiTheme}>
                 <div>
-                    <Header />
+                    <Header title="Carborn - Admin" />
                     <Navigation />
-                    <div>
+                    <div style={contentsStyle}>
                         {children}
                     </div>
                 </div>

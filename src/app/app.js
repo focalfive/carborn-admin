@@ -9,7 +9,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin'
 
 import App from './components/App'
 import Home from './components/Home'
-import Foo from './components/Foo'
+import Parser from './components/Parser'
 import Bar from './components/Bar'
 import configureStore from './store/configureStore'
 
@@ -26,7 +26,7 @@ ReactDOM.render(
         <Router history={history}>
             <Route path="/" component={App}>
                 <IndexRoute component={Home} />
-                <Route path="foo" component={Foo} />
+                <Route path="parser" component={Parser} />
                 <Route path="bar" component={Bar} />
             </Route>
         </Router>
