@@ -14,7 +14,7 @@ class Home extends React.Component {
 
         return (
             <div>
-                <h2>Home</h2>
+                <h2>FFive</h2>
                 Count: {number}
                 <br />
                 <RaisedButton label="Increase count" onTouchTap={() => increase(1)} />
