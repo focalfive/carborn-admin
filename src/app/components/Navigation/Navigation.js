@@ -26,7 +26,7 @@ class Navigation extends React.Component {
             >
                 <MenuItem onTouchTap={this.menuDidSelect} href="#/">Home</MenuItem>
                 <MenuItem onTouchTap={this.menuDidSelect} href="#/parser">Parser</MenuItem>
-                <MenuItem>Menu Item 2</MenuItem>
+                <MenuItem onTouchTap={this.menuDidSelect} href="#/deployer">Deployer</MenuItem>
             </Drawer>
         )
     }
