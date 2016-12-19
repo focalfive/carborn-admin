@@ -22,7 +22,6 @@ class Navigation extends React.Component {
                 docked={false}
                 open={navigationOpen}
                 onRequestChange={(open) => toggleNavigation(open)}
-                on
             >
                 <MenuItem onTouchTap={this.menuDidSelect} href="#/">Home</MenuItem>
                 <MenuItem onTouchTap={this.menuDidSelect} href="#/parser">Parser</MenuItem>

@@ -24,6 +24,7 @@ class Parser extends React.Component {
 
     componentDidMount() {
         this.loadStableAppVersion()
+        console.log("Parser componentDidMount")
     }
 
     loadStableAppVersion = () => {
@@ -108,7 +109,7 @@ class Parser extends React.Component {
             min_app_ver: lastAppVersion,
             db_obj_id: oid,
         }
-        console.log(data)
+        
         $.ajax({
             url: "http://slowslipper.woobi.co.kr/carborn/status/",
             data: JSON.stringify(data),

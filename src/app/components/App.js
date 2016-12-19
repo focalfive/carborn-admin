@@ -27,7 +27,7 @@ class App extends Component {
         return (
             <MuiThemeProvider muiTheme={muiTheme}>
                 <div>
-                    <Header title="Carborn - Admin" />
+                    <Header title="Carborn - admin" />
                     <Navigation />
                     <div style={contentsStyle}>
                         {children}

@@ -1,2 +1,3 @@
 export const INCREASE = 'INCREASE'
 export const NAVIGATION_OPEN = 'NAVIGATION_OPEN'
+export const UPDATE_TITLE = 'UPDATE_TITLE'

@@ -6,8 +6,7 @@ import TextField from 'material-ui/TextField'
 import CircularProgress from 'material-ui/CircularProgress'
 import Snackbar from 'material-ui/Snackbar'
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table'
-import { connect } from 'react-redux'
-import { increase } from '../../actions'
+import PasswordConfirm from '../PasswordConfirm'
 import $ from 'jquery'
 
 class Deployer extends React.Component {
@@ -15,6 +14,8 @@ class Deployer extends React.Component {
     state = {
         snackbarMessage: "",
         versions: [],
+        deployTarget: null,
+        deleteTarget: null,
     }
 
     componentDidMount() {
@@ -23,7 +24,7 @@ class Deployer extends React.Component {
 
     loadVersionList() {
         $.ajax({
-            url: "http://slowslipper.woobi.co.kr/carborn/status/",
+            url: "http://slowslipper.woobi.co.kr/carborn/status/all/",
             type: "GET",
             contentType: "application/json",
         })
@@ -32,16 +33,18 @@ class Deployer extends React.Component {
     }
 
     loadVersionListDone = (res) => {
-        console.log(res)
-        this.setState({
-            versions: [res],
-        })
-        this.showSnackbar("Success!")
+        this.setStateAndShowSnackbar({
+            versions: res,
+        }, "Success to load!")
     }
 
     loadVersionListFail = (xhr, msg) => {
-        console.log(msg)
-        this.showSnackbar("Fail")
+        this.showSnackbar("Fail to load")
+    }
+
+    setStateAndShowSnackbar = (state, msg) => {
+        state.snackbarMessage = msg
+        this.setState(state)
     }
 
     showSnackbar = (msg) => {
@@ -56,10 +59,87 @@ class Deployer extends React.Component {
         })
     }
 
+    handleDeploy(rowIndex) {
+        this.setState({
+            deployTarget: rowIndex,
+        })
+    }
+
+    handleMatchPasswordDeployDialog = () => {
+        let versionItem = this.state.versions[this.state.deployTarget]
+        console.log("Deploy", versionItem)
+        $.ajax({
+            url: "http://slowslipper.woobi.co.kr/carborn/status/cache/id/" + versionItem.id,
+            type: "POST",
+            contentType: "application/json",
+        })
+        .done(this.makeCacheDone)
+        .fail(this.makeCacheFail)
+    }
+
+    makeCacheDone = (res) => {
+        this.setStateAndShowSnackbar({
+            deployTarget: null,
+        }, "Success to live!")
+    }
+
+    makeCacheFail = (xhr, msg) => {
+        this.setStateAndShowSnackbar({
+            deployTarget: null,
+        }, "Fail to live")
+    }
+
+    handleClosePasswordDeployDialog = () => {
+        this.setState({
+            deployTarget: null,
+        })
+    }
+
+    handleDelete(rowIndex) {
+        this.setState({
+            deleteTarget: rowIndex,
+        })
+    }
+
+    handleMatchPasswordDeleteDialog = () => {
+        let versionItem = this.state.versions[this.state.deleteTarget]
+        console.log("Delete", versionItem)
+        $.ajax({
+            url: "http://slowslipper.woobi.co.kr/carborn/status/delete/id/" + versionItem.id,
+            type: "POST",
+            contentType: "application/json",
+        })
+        .done(this.deleteItemDone)
+        .fail(this.deleteItemFail)
+    }
+
+    deleteItemDone = (res) => {
+        var versions = this.state.versions
+        versions.splice(this.state.deleteTarget, 1)
+        this.setStateAndShowSnackbar({
+            deleteTarget: null,
+            versions: versions,
+        }, "Success to delete!")
+    }
+
+    deleteItemFail = (xhr, msg) => {
+        this.setStateAndShowSnackbar({
+            deleteTarget: null,
+        }, "Fail to delete")
+    }
+
+    handleClosePasswordDeleteDialog = () => {
+        this.setState({
+            deleteTarget: null,
+        })
+    }
+
     render() {
         const {
             snackbarMessage,
             versions,
+            deployTarget,
+            deleteTarget,
         } = this.state
 
         const hasData = versions.length > 0
@@ -84,6 +164,8 @@ class Deployer extends React.Component {
                                 <TableHeaderColumn>max_app_ver</TableHeaderColumn>
                                 <TableHeaderColumn>db_obj_id</TableHeaderColumn>
                                 <TableHeaderColumn>updated</TableHeaderColumn>
+                                <TableHeaderColumn>deploy</TableHeaderColumn>
+                                <TableHeaderColumn>delete</TableHeaderColumn>
                             </TableRow>
                         </TableHeader>
                         <TableBody
@@ -96,6 +178,20 @@ class Deployer extends React.Component {
                                     <TableRowColumn>{row.max_app_ver}</TableRowColumn>
                                     <TableRowColumn>{row.db_obj_id}</TableRowColumn>
                                     <TableRowColumn>{row.updated}</TableRowColumn>
+                                    <TableRowColumn>
+                                        <FlatButton
+                                            label="Live"
+                                            primary={true}
+                                            onTouchTap={this.handleDeploy.bind(this, rowNumber)}
+                                        />
+                                    </TableRowColumn>
+                                    <TableRowColumn>
+                                        <FlatButton
+                                            label="Delete"
+                                            primary={true}
+                                            onTouchTap={this.handleDelete.bind(this, rowNumber)}
+                                        />
+                                    </TableRowColumn>
                                 </TableRow>
                             ))}
                         </TableBody>
@@ -107,14 +203,19 @@ class Deployer extends React.Component {
                     autoHideDuration={4000}
                     onRequestClose={this.handleCloseSnackbar}
                 />
+                <PasswordConfirm
+                    open={deployTarget != null}
+                    resolve={this.handleMatchPasswordDeployDialog}
+                    reject={this.handleClosePasswordDeployDialog}
+                />
+                <PasswordConfirm
+                    open={deleteTarget != null}
+                    resolve={this.handleMatchPasswordDeleteDialog}
+                    reject={this.handleClosePasswordDeleteDialog}
+                />
             </div>
         )
     }
 }
 
-export default connect(
-    state => {
-        return { number: state.count.number }
-    },
-    { increase }
-)(Deployer)
+export default Deployer

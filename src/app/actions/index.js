@@ -15,3 +15,11 @@ export function toggleNavigation(open) {
         open: open
     }
 }
+
+export function updateTitle(title) {
+    console.log("action - updateTitle, title:", title)
+    return {
+        type: types.UPDATE_TITLE,
+        title: title
+    }
+}
