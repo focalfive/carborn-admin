@@ -4,6 +4,7 @@ import Dialog from 'material-ui/Dialog'
 import { connect } from 'react-redux'
 import { increase, updateTitle } from '../../actions'
 import { browserHistory } from 'react-router'
+import TitleBar from '../TitleBar'
 
 class Home extends React.Component {
 
@@ -23,9 +24,9 @@ class Home extends React.Component {
 
         return (
             <div>
-                <h2>Home</h2>
-                <div>
-                    <RaisedButton label="Parser" onTouchTap={this.navigateToParser} /><br />
+                <TitleBar title="Home" />
+                <div style={{padding:20}}>
+                    <RaisedButton label="Parser" onTouchTap={this.navigateToParser} style={{marginRight: 20}} />
                     <RaisedButton label="Deployer" onTouchTap={this.navigateToDeployer} />
                 </div>
             </div>

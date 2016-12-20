@@ -6,8 +6,7 @@ import TextField from 'material-ui/TextField'
 import CircularProgress from 'material-ui/CircularProgress'
 import Snackbar from 'material-ui/Snackbar'
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table'
-import { connect } from 'react-redux'
-import { increase } from '../../actions'
+import TitleBar from '../TitleBar'
 import $ from 'jquery'
 
 class Parser extends React.Component {
@@ -109,7 +108,7 @@ class Parser extends React.Component {
             min_app_ver: lastAppVersion,
             db_obj_id: oid,
         }
-        
+
         $.ajax({
             url: "http://slowslipper.woobi.co.kr/carborn/status/",
             data: JSON.stringify(data),
@@ -279,7 +278,7 @@ class Parser extends React.Component {
 
         return (
             <div>
-                <h2>Parser</h2>
+                <TitleBar title="Parser" backPath="#" />
                 {progress ? (
                     <div style={{position: "absolute", left: "50%", top: "50%"}}>
                         <div style={{width: 100, textAlign: "center", margin: "-50px 0 0 -50px"}}>
@@ -370,9 +369,4 @@ class Parser extends React.Component {
     }
 }
 
-export default connect(
-    state => {
-        return { number: state.count.number }
-    },
-    { increase }
-)(Parser)
+export default Parser
