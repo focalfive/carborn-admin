@@ -3,15 +3,15 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { DataComponent } from './data.component';
 
-const dataRoutes: Routes = [
-    {
-        path: '',
-        component: DataComponent,
-    }
+const routes: Routes = [
+  {
+    path: '',
+    component: DataComponent,
+  }
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(dataRoutes)],
-    exports: [RouterModule],
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class DataRoutingModule { }

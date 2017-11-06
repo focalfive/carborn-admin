@@ -1,21 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MdButtonModule } from '@angular/material';
-import { RouterModule } from '@angular/router';
+import { MatButtonModule } from '@angular/material';
 
 import { GnbComponent } from './gnb/gnb.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        MdButtonModule,
-        RouterModule,
-    ],
-    exports: [
-        GnbComponent
-    ],
-    declarations: [
-        GnbComponent,
-    ],
+  imports: [
+    CommonModule,
+    MatButtonModule,
+  ],
+  exports: [GnbComponent],
+  declarations: [GnbComponent],
 })
 export class SharedModule { }
