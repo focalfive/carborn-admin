@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 import { URLSearchParams } from '@angular/http';
 
 import { LoginService } from './shared/login.service';
@@ -17,10 +18,15 @@ export class LoginComponent implements OnInit {
   constructor(
     private location: Location,
     private loginService: LoginService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
-    this.parseUriCode();
+    let isLogin = User.shared.isLogin;
+    if (isLogin) {
+    } else {
+      this.parseUriCode();
+    }
   }
 
   parseUriCode() {
@@ -28,6 +34,14 @@ export class LoginComponent implements OnInit {
     const code = params.get('code');
     this.code = code;
     if (code) {
+      console.log('Start loading...');
+      User.shared.loginStatus.subscribe(
+        isLogin => {
+          if (isLogin) {
+            this.router.navigate(['/']);
+          }
+        }
+      );
       this.getToken(code);
     }
   }
@@ -35,20 +49,39 @@ export class LoginComponent implements OnInit {
   getToken = (code: string) => {
     this.loginService.getAccessToken(code).subscribe(
       res => {
-        if (!this.parseAccessToken(res)) {
+        if (this.parseAccessToken(res)) {
+          this.getUserInfo();
+        } else {
           this.code = null;
+          console.error('There is no access token for login with google+');
         }
       },
       err => {
-        this.code = null
+        this.code = null;
+        this.router.navigate(['/login']);
       }
     );
   }
 
+  getUserInfo = () => {
+    let accessToken = User.shared.accessToken;
+    if (accessToken != null && accessToken.length > 0) {
+      this.loginService.googleUser(accessToken).subscribe(
+        res => {
+          User.shared.updateUserInfo(res.id, res.name, res.email);
+        },
+        err => {
+          return;
+        }
+      );
+    }
+  }
+
   parseAccessToken = (data: any): boolean => {
-    if (typeof data.access_token === 'string' &&
-    typeof data.expires_in === 'number') {
-      User.shared.updateAuthInfo(this.code, data.access_token, data.expires_in, this.getToken);
+    if (typeof data.access_token === 'string') {
+      if (typeof data.expires_in === 'number') {
+        User.shared.updateAuthInfo(this.code, data.access_token, data.expires_in, this.getToken);
+      }
       return true;
     }
 

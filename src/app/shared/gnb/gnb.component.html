@@ -1,6 +1,6 @@
-<h1>Carborn</h1>
-<ul>
-    <li><button mat-button color="primary" routerLink="home">Home</button></li>
-    <li><button mat-button color="primary" routerLink="login">Login</button></li>
-    <li><button mat-button color="primary" routerLink="data">Data</button></li>
+<h1><a href="/" routerLink="/">Carborn</a></h1>
+<ul *ngIf="!isLoginComponent">
+    <li><a mat-button color="primary" routerLink="/data">Data</a></li>
+    <li *ngIf="isLogin"><a mat-button color="primary" (click)="logoutDidSelect()">Logout</a></li>
+    <li *ngIf="!isLogin"><a mat-button color="primary" routerLink="/login">Login</a></li>
 </ul>

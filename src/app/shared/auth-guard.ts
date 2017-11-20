@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanLoad, Route, Router, RouterStateSnapshot } from '@angular/router';
 
+import { User } from './user.model';
+
 @Injectable()
 export class AuthGuard implements CanActivate {
 
@@ -10,7 +12,7 @@ export class AuthGuard implements CanActivate {
 
   get isLogged(): boolean {
     // TODO: Develop about roogin or not
-    return false;
+    return User.shared.isLogin;
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
