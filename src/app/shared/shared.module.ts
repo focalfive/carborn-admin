@@ -1,9 +1,10 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Injector } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material';
 
 import { GnbComponent } from './gnb/gnb.component';
+import { UserService } from './shared/user.service';
 
 @NgModule({
   imports: [
@@ -12,6 +13,13 @@ import { GnbComponent } from './gnb/gnb.component';
     MatButtonModule,
   ],
   exports: [GnbComponent],
+  providers: [UserService],
   declarations: [GnbComponent],
 })
-export class SharedModule { }
+export class SharedModule {
+
+  static injector: Injector;
+  constructor(injector: Injector) {
+    SharedModule.injector = injector;
+  }
+}

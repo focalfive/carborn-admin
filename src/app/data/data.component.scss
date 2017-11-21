@@ -7,30 +7,56 @@
 @include mat-core();
 
 // Define the theme.
-$primary: mat-palette($mat-red);
-$accent:  mat-palette($mat-red, 600, 100, 800);
-$warn:    mat-palette($mat-red, 600);
+$primary: mat-palette($mat-cyan);
+$accent:  mat-palette($mat-cyan, 600, 100, 800);
+$warn:    mat-palette($mat-cyan, 600);
 $theme: mat-light-theme($primary, $accent, $warn);
 // Include the theme styles for only specified components.
 @include mat-core-theme($theme);
 @include mat-button-theme($theme);
-@include mat-checkbox-theme($theme);
+@include mat-progress-spinner-theme($theme);
 
 :host {
-  display: block;
-  position: relative;
   height: 100%;
 }
 
-button {
-  // display: block;
-  // position: absolute;
+.msg {
+  position: absolute;
   left: 50%;
   top: 50%;
-  margin: -25px 0 0 -64px;
-  width: 128px;
-  height: 50px;
+  width: 256px;
+  height: 256px;
+  margin: -128px 0 0 -128px;
+  text-align: center;
 }
+
+.msg-title {
+  font-size: 28px;
+  font-weight: 300;
+}
+
+.msg-text {
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.msg-title,
+.msg-text,
+.field-id {
+  margin-bottom: 20px;
+}
+
+.field-id {
+  height: 50px;
+  overflow: hidden;
+  border: solid #ccc 1px;
+  line-height: 52px;
+}
+
+.msg > mat-spinner {
+  margin-left: 78px;
+}
+
 .mat-raised-button {
   font-weight: 100;
 }

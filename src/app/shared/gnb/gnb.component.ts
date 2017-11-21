@@ -7,7 +7,7 @@ import { User } from '../user.model';
 @Component({
   selector: 'app-gnb',
   templateUrl: './gnb.component.html',
-  styleUrls: ['./gnb.component.css']
+  styleUrls: ['./gnb.component.scss']
 })
 export class GnbComponent implements OnInit {
 

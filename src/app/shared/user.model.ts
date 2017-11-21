@@ -1,7 +1,11 @@
+import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs/Rx';
 
 import { Cookie } from '../util/cookie';
+import { SharedModule } from './shared.module';
+import { UserService } from './shared/user.service';
 
+@Injectable()
 export class User {
 
   static _shared: User = null;
@@ -19,7 +23,7 @@ export class User {
   }
   private _isLoginBehavior = new BehaviorSubject<boolean>(this.isLogin);
   get loginStatus(): Observable<boolean> {
-    return this._isLoginBehavior.asObservable();//.startWith(this.isLogin);
+    return this._isLoginBehavior.asObservable();
   }
   // private _id: string = null;
   get id(): string {
@@ -47,8 +51,12 @@ export class User {
     // return this._accessToken;
   }
   private _tokenRefreshTimeout: number = -1;
+  private userService: UserService;
+  private isAdmin = '';
 
   constructor() {
+    this.userService = SharedModule.injector.get(UserService);
+
     let tokenExpireDateString = Cookie.shared.getItem('user_tokenExpireDate');
     if (tokenExpireDateString !== null && tokenExpireDateString.length > 0, !isNaN(Number(tokenExpireDateString))) {
       let tokenExpireDate = new Date(Number(tokenExpireDateString));
@@ -85,9 +93,75 @@ export class User {
     // this._email = userEmail;
     this._isLogin = userId !== null;
     if (isChanged) {
+      if (this._isLogin) {
+        this.getIsAdmin();
+      }
       this._isLoginBehavior.next(this._isLogin);
     }
   }
+
+  getIsAdmin(): Observable<boolean> {
+    if (this.isAdmin === 'T' || this.isAdmin === 'F' || !this.isLogin) {
+      return Observable.create(observer => {
+        observer.next(this.isAdmin === 'T');
+        observer.complete();
+      });
+    }
+    return Observable.create(observer => {
+      this.userService.getUser(this.id).subscribe(
+        res => {
+          console.log(res);
+          var isAdmin = 'F';
+          let ids: Array<string> = res.ids;
+          if (ids.length > 0) {
+            for (let id of ids) {
+              console.log(id);
+              if (id === this.id) {
+                isAdmin = 'T';
+                break;
+              }
+            }
+          }
+          if (this.isAdmin !== isAdmin) {
+            this.isAdmin = isAdmin;
+          }
+          observer.next(this.isAdmin === 'T');
+          observer.complete();
+        },
+        err => {
+          console.error(err);
+          this.isAdmin = '';
+          observer.next(false);
+          observer.complete();
+        }
+      )
+    });
+  }
+
+  // checkUserInfo(userId: string) {
+  //   this.userService.getUser(userId).subscribe(
+  //     res => {
+  //       console.log(res);
+  //       var isAdmin = 'F';
+  //       let ids: Array<string> = res.ids;
+  //       if (ids.length > 0) {
+  //         for (let id of ids) {
+  //           console.log(id);
+  //           if (id === userId) {
+  //             isAdmin = 'T';
+  //             break;
+  //           }
+  //         }
+  //       }
+  //       if (this.isAdmin !== isAdmin) {
+  //         this._isAdmin = isAdmin;
+  //       }
+  //     },
+  //     err => {
+  //       console.error(err);
+  //     }
+  //   )
+  // }
 
   clean() {
     const isChanged = this._isLogin;
