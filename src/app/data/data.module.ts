@@ -5,6 +5,7 @@ import { MatButtonModule, MatMenuModule, MatProgressSpinnerModule } from '@angul
 import { DataRoutingModule } from './data-routing.module';
 import { DataComponent } from './data.component';
 import { DataEditorComponent } from './data-editor/data-editor.component';
+import { DataService } from './shared/data.service';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { DataEditorComponent } from './data-editor/data-editor.component';
     MatMenuModule,
     MatProgressSpinnerModule,
   ],
-  declarations: [DataComponent, DataEditorComponent]
+  declarations: [DataComponent, DataEditorComponent],
+  providers: [DataService],
 })
 export class DataModule { }

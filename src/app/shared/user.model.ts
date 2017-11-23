@@ -53,6 +53,7 @@ export class User {
   private _tokenRefreshTimeout: number = -1;
   private userService: UserService;
   private isAdmin = '';
+  private dataObjectId: string = null;
 
   constructor() {
     this.userService = SharedModule.injector.get(UserService);
@@ -112,7 +113,7 @@ export class User {
         res => {
           console.log(res);
           var isAdmin = 'F';
-          let ids: Array<string> = res.ids;
+          let ids: Array<string> = res.admin_ids;
           if (ids.length > 0) {
             for (let id of ids) {
               console.log(id);
@@ -125,6 +126,9 @@ export class User {
           if (this.isAdmin !== isAdmin) {
             this.isAdmin = isAdmin;
           }
+
+          this.dataObjectId = res.data_id;
+
           observer.next(this.isAdmin === 'T');
           observer.complete();
         },

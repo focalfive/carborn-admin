@@ -4,5 +4,7 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  mLabApiKey: 'RVBlmzNJ6hMYAruIrDZtDfhUaKGKbbvQ',
+  mLabApiAdminObjectId: '5a168f0b734d1d3ed22d2509',
 };
