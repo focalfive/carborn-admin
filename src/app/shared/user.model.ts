@@ -17,6 +17,8 @@ export class User {
     return User._shared;
   }
 
+  dataObjectId: string = null;
+
   private _isLogin = Cookie.shared.getItem('user_id') != null;
   get isLogin(): boolean {
     return this._isLogin;
@@ -53,7 +55,6 @@ export class User {
   private _tokenRefreshTimeout: number = -1;
   private userService: UserService;
   private isAdmin = '';
-  private dataObjectId: string = null;
 
   constructor() {
     this.userService = SharedModule.injector.get(UserService);
