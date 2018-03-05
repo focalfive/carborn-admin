@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 import { User } from '../shared/user.model';
 
@@ -12,8 +13,11 @@ export class DataComponent implements OnInit {
   private isCheckingPermissions = false;
   private isAdmin = false;
   private userId = '';
+  private id = null;
 
-  constructor() { }
+  constructor(
+    protected activatedRoute: ActivatedRoute,
+  ) { }
 
   ngOnInit() {
     console.log('Checking permissions...');
@@ -34,6 +38,13 @@ export class DataComponent implements OnInit {
         console.error('Check admin error');
       }
     );
+
+    this.activatedRoute.queryParams.subscribe(params => {
+      if (params['dataId']) {
+        console.log('dataId', params['dataId']);
+        this.id = params['dataId'];
+      }
+    });
   }
 
   showUserId() {

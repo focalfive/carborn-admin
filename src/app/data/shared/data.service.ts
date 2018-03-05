@@ -14,19 +14,19 @@ export class DataService {
   ) { }
 
   getList(): Observable<Data[]> {
-    return this.http.get(`https://api.mlab.com/api/1/databases/carborn/collections/cars/?f={"title": 1}&apiKey=${API_KEY}`)
-      .map((res: Response) => res.json() as Data[])
-      .catch((error: any) => Observable.throw(error || 'Server error'));
-
     // return this.http.get(`https://api.mlab.com/api/1/databases/carborn/collections/cars/?f={"title": 1}&apiKey=${API_KEY}`)
-    //   .map((res: Response) => res.json().map(
-    //     item => {
-    //       var model = new Data();
-    //       model.id = item.id;
-    //       model.title = item.title;
-    //       return model;
-    //   }))
+    //   .map((res: Response) => res.json() as Data[])
     //   .catch((error: any) => Observable.throw(error || 'Server error'));
+    return this.http.get(`https://api.mlab.com/api/1/databases/carborn/collections/cars/?f={"title": 1}&apiKey=${API_KEY}`)
+      .map((res: Response) => res.json().map(
+        item => (new Data(item))))
+      .catch((error: any) => Observable.throw(error || 'Server error'));
+  }
+
+  get(id: string): Observable<Data> {
+    return this.http.get(`https://api.mlab.com/api/1/databases/carborn/collections/cars/${id}/?apiKey=${API_KEY}`)
+      .map((res: Response) => new Data(res.json()))
+      .catch((error: any) => Observable.throw(error || 'Server error'));
   }
 
 }

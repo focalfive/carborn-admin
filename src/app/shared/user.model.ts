@@ -112,12 +112,10 @@ export class User {
     return Observable.create(observer => {
       this.userService.getUser(this.id).subscribe(
         res => {
-          console.log(res);
           var isAdmin = 'F';
           let ids: Array<string> = res.admin_ids;
           if (ids.length > 0) {
             for (let id of ids) {
-              console.log(id);
               if (id === this.id) {
                 isAdmin = 'T';
                 break;
@@ -142,31 +140,6 @@ export class User {
       )
     });
   }
-
-  // checkUserInfo(userId: string) {
-  //   this.userService.getUser(userId).subscribe(
-  //     res => {
-  //       console.log(res);
-  //       var isAdmin = 'F';
-  //       let ids: Array<string> = res.ids;
-  //       if (ids.length > 0) {
-  //         for (let id of ids) {
-  //           console.log(id);
-  //           if (id === userId) {
-  //             isAdmin = 'T';
-  //             break;
-  //           }
-  //         }
-  //       }
-  //       if (this.isAdmin !== isAdmin) {
-  //         this._isAdmin = isAdmin;
-  //       }
-  //     },
-  //     err => {
-  //       console.error(err);
-  //     }
-  //   )
-  // }
 
   clean() {
     const isChanged = this._isLogin;

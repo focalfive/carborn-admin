@@ -4,7 +4,7 @@
 </div>
 <div *ngIf="!isCheckingPermissions">
   <div *ngIf="isAdmin">
-    <app-data-editor></app-data-editor>
+    <app-data-editor [id]="id"></app-data-editor>
   </div>
   <div class="msg" *ngIf="!isAdmin">
     <div class="msg-title">Permission denined!</div>
