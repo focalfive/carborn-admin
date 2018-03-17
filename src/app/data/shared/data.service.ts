@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
-import { Data } from '../data.model'
+import { Data } from '../shared/data.model'
 import { environment } from '../../../environments/environment';
 const API_KEY: string = environment.mLabApiKey;
 

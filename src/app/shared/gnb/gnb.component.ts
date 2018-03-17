@@ -12,7 +12,7 @@ import { User } from '../user.model';
 export class GnbComponent implements OnInit {
 
   private isLogin: boolean = User.shared.isLogin;
-  private isLoginComponent: boolean = false;
+  isLoginComponent: boolean = false;
 
   constructor(
     private location: Location,

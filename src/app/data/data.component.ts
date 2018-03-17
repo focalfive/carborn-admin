@@ -10,7 +10,7 @@ import { User } from '../shared/user.model';
 })
 export class DataComponent implements OnInit {
 
-  private isCheckingPermissions = false;
+  isCheckingPermissions = false;
   private isAdmin = false;
   private userId = '';
   private id = null;
