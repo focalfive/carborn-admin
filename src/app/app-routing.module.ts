@@ -14,6 +14,10 @@ const routes: Routes  = [
         loadChildren: 'app/login/login.module#LoginModule',
     },
     {
+        path: 'play',
+        loadChildren: 'app/play/play.module#PlayModule',
+    },
+    {
         path: '',
         redirectTo: 'data',
         pathMatch: 'full',

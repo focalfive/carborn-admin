@@ -17,6 +17,37 @@ export class DataEditorComponent implements OnChanges, OnInit, AfterViewInit {
   data: Data;
   displayedColumns = ['brand', 'display_name', 'hp', 'torque', 'weight', 'year'];
   dataSource: MatTableDataSource<Car>;
+  columns = [
+    { key: 'brand', name: 'Brand', selected: false },
+    { key: 'carcode', name: 'Car code', selected: true },
+    { key: 'cylinder_arrangement', name: 'Cylinder arrangement', selected: false },
+    { key: 'cylinders', name: 'Cylinder count', selected: false },
+    { key: 'discontinue', name: 'Discontinue', selected: false },
+    { key: 'displacement', name: 'Displacement', selected: false },
+    { key: 'display_name', name: 'Display name', selected: false },
+    { key: 'efficiency', name: 'Efficiency', selected: false },
+    { key: 'efficiency_sport', name: 'Efficiency for Sports mode', selected: false },
+    { key: 'engine_layout', name: 'Engine layout', selected: false },
+    { key: 'engine_position', name: 'Engine position', selected: false },
+    { key: 'gearbox_level', name: 'Gearbox max level', selected: false },
+    { key: 'gearbox_type', name: 'Gearbox type', selected: false },
+    { key: 'generation_name', name: 'Generation name', selected: false },
+    { key: 'generation_sequence', name: 'Generation sequence', selected: false },
+    { key: 'hp', name: 'HP', selected: false },
+    { key: 'hp_at_rpm', name: 'Max HP at RPM', selected: false },
+    { key: 'image_url', name: 'Image URL', selected: false },
+    { key: 'manufacturer', name: 'Manufacturer', selected: false },
+    { key: 'max_rpm', name: 'Max RPM', selected: false },
+    { key: 'model', name: 'Model', selected: false },
+    { key: 'price_eu', name: 'Price (EU)', selected: false },
+    { key: 'price_kr', name: 'Price (KR)', selected: false },
+    { key: 'rejection_co2', name: 'Rejection (CO2)', selected: false },
+    { key: 'torque', name: 'Torque', selected: false },
+    { key: 'torque_from', name: 'Max Torque from RPM', selected: false },
+    { key: 'torque_to', name: 'Max Torque to RPM', selected: false },
+    { key: 'weight', name: 'Weight', selected: false },
+    { key: 'year', name: 'Year', selected: false },
+  ];
   @Input() id: string = null;
   get dataId(): string {
     return this.id;
@@ -49,6 +80,7 @@ export class DataEditorComponent implements OnChanges, OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    console.log('ngAfterViewInit');
   }
 
   loadList() {
@@ -74,7 +106,9 @@ export class DataEditorComponent implements OnChanges, OnInit, AfterViewInit {
         console.log(data);
         this.data = data;
         this.dataSource = new MatTableDataSource<Car>(data.cars);
-        this.dataSource.sort = this.sort;
+        setTimeout(() => {
+          this.dataSource.sort = this.sort;
+        }, 0);
       },
       err => {
         console.error('Error', err);
@@ -82,12 +116,16 @@ export class DataEditorComponent implements OnChanges, OnInit, AfterViewInit {
     );
   }
 
-  listDidSelect(event: any, id: string) {
+  versionMenuDidSelect(event: any, id: string) {
     // this.dataId = id;
     let queryParams = {
       dataId: id,
     }
     this.router.navigate(['data'], {queryParams: queryParams});
+  }
+
+  columnMenuDidSelect(event: any, id: string) {
+    console.log('columnMenuDidSelect', id);
   }
 
 }

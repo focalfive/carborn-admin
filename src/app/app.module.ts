@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { DataModule } from './data/data.module';
 import { LoginModule } from './login/login.module';
+import { PlayModule } from './play/play.module';
 import { SharedModule } from './shared/shared.module';
 
 @NgModule({
@@ -20,6 +21,7 @@ import { SharedModule } from './shared/shared.module';
     FormsModule,
     HttpModule,
     LoginModule,
+    PlayModule,
     SharedModule,
   ],
   providers: [],

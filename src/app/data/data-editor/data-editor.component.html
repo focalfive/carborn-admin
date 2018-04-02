@@ -1,10 +1,15 @@
 
-<button mat-button [matMenuTriggerFor]="menu">Version {{ data?.title }}</button>
-<mat-menu #menu="matMenu">
-  <button mat-menu-item *ngFor="let item of dataList" (click)="listDidSelect($event, item.id)">{{ item.title }}</button>
+<button mat-button [matMenuTriggerFor]="versionMenu">Version {{ data?.title }}</button>
+<mat-menu #versionMenu="matMenu">
+  <button mat-menu-item *ngFor="let item of dataList" (click)="versionMenuDidSelect($event, item.id)">{{ item.title }}</button>
 </mat-menu>
 
-<div *ngIf="data" class="example-container mat-elevation-z8">
+<button mat-button [matMenuTriggerFor]="columnMenu">Custom Column</button>
+<mat-menu #columnMenu="matMenu">
+  <button mat-menu-item *ngFor="let item of columns" (click)="columnMenuDidSelect($event, item.key)"><span *ngIf="item.selected">V</span>{{ item.name }}</button>
+</mat-menu>
+
+<div *ngIf="dataSource" class="example-container mat-elevation-z8">
   <mat-table #table [dataSource]="dataSource" matSort>
 
     <!-- Brand Column -->
