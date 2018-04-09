@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
-const CLIENT_ID: string = '598923188772-mnusf73277ui7pq88o4lh2tpqkhml460.apps.googleusercontent.com';
-const CLIENT_SECRET: string = 'LeJR4jQbfvsazbFYk5L_-1Ui';
-const REDIRECT_URI: string = 'http://slows.me:4200/login';
+import { environment } from '../../../environments/environment';
+
+const CLIENT_ID: string = environment.googleClientId;
+const CLIENT_SECRET: string = environment.googleClientSecret;
+const REDIRECT_URI: string = environment.googleRedirectUri;
 
 @Injectable()
 export class LoginService {
