@@ -5,6 +5,7 @@ PROJECT_NAME=carborn-admin
 SOURCE_DIR=/usr/share/nginx/html
 TARGET=master
 TARGET_PORT=8080
+CONTAINER_NAME=${PROJECT_NAME}-${TARGET}
 IMAGE_NAME=${PROJECT_NAME}:${TARGET}
 
 echo "TARGET: ${TARGET}"
@@ -15,12 +16,12 @@ git checkout --track origin/${TARGET}
 
 git pull
 
-docker stop ${PROJECT_NAME}
+docker stop ${CONTAINER_NAME}
 
-docker rm ${PROJECT_NAME}
+docker rm ${CONTAINER_NAME}
 
 docker rmi ${IMAGE_NAME}
 
 docker build -t ${IMAGE_NAME} .
 
-docker run --name ${PROJECT_NAME} -d -p ${TARGET_PORT}:80 ${IMAGE_NAME}
+docker run --name ${CONTAINER_NAME} -d -p ${TARGET_PORT}:80 ${IMAGE_NAME}
