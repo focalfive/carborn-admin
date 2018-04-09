@@ -11,7 +11,7 @@ echo "TARGET: ${TARGET}"
 echo "CONTAINER: ${PROJECT_NAME}"
 echo "IMAGE: ${IMAGE_NAME}"
 
-git checkout -b ${TARGET}
+git checkout --track origin/${TARGET}
 
 git pull
 
