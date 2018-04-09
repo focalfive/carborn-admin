@@ -3,7 +3,7 @@
 # Variables
 PROJECT_NAME=carborn-admin
 SOURCE_DIR=/usr/share/nginx/html
-TARGET=production
+TARGET=master
 TARGET_PORT=8080
 IMAGE_NAME=${PROJECT_NAME}:${TARGET}
 
