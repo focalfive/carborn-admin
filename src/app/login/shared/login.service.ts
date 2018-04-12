@@ -13,11 +13,13 @@ export class LoginService {
 
   constructor(
     private http: Http,
-  ) { }
+  ) {
+      console.log('REDIRECT_URI', REDIRECT_URI);
+  }
 
   navigateToGoogleLogin() {
     location.href = 'https://accounts.google.com/o/oauth2/v2/auth?state=state_parameter_passthrough_value&response_type=code&client_id=' + CLIENT_ID +
-            '&redirect_uri=' + location.href + '&scope=email%20profile';
+            '&redirect_uri=' + REDIRECT_URI + '&scope=email%20profile';
   }
 
   getAccessToken(code: string): Observable<any> {
