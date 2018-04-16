@@ -66,7 +66,9 @@ export class DataEditorComponent implements OnChanges, OnInit, AfterViewInit {
   constructor(
     private dataService: DataService,
     private router: Router,
-  ) { }
+  ) {
+    // TODO: Init column array from Car.columns
+  }
 
   ngOnInit() {
     this.loadList();
