@@ -12,40 +12,9 @@
 <div *ngIf="dataSource" class="example-container mat-elevation-z8">
   <mat-table #table [dataSource]="dataSource" matSort>
 
-    <!-- Brand Column -->
-    <ng-container matColumnDef="brand">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Brand </mat-header-cell>
-      <mat-cell *matCellDef="let car"> {{car.brand}} </mat-cell>
-    </ng-container>
-
-    <!-- Display Name Column -->
-    <ng-container matColumnDef="display_name">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-      <mat-cell *matCellDef="let car"> {{car.display_name}} </mat-cell>
-    </ng-container>
-
-    <!-- HP Column -->
-    <ng-container matColumnDef="hp">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> HP </mat-header-cell>
-      <mat-cell *matCellDef="let car"> {{car.hp}} </mat-cell>
-    </ng-container>
-
-    <!-- Torque Column -->
-    <ng-container matColumnDef="torque">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Torque </mat-header-cell>
-      <mat-cell *matCellDef="let car"> {{car.torque}} </mat-cell>
-    </ng-container>
-
-    <!-- Weight Column -->
-    <ng-container matColumnDef="weight">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Weight </mat-header-cell>
-      <mat-cell *matCellDef="let car"> {{car.weight}} </mat-cell>
-    </ng-container>
-
-    <!-- Year Column -->
-    <ng-container matColumnDef="year">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Year </mat-header-cell>
-      <mat-cell *matCellDef="let car"> {{car.year}} </mat-cell>
+    <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{column}} </mat-header-cell>
+      <mat-cell *matCellDef="let car"> {{car[column]}} </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
