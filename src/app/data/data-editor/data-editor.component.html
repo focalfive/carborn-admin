@@ -6,7 +6,7 @@
 
 <button mat-button [matMenuTriggerFor]="columnMenu">Custom Column</button>
 <mat-menu #columnMenu="matMenu">
-  <button mat-menu-item *ngFor="let item of columns" (click)="columnMenuDidSelect($event, item.key)"><span *ngIf="item.selected">V</span>{{ item.name }}</button>
+  <button mat-menu-item *ngFor="let item of columns" (click)="columnMenuDidSelect($event, item.key)"><mat-icon *ngIf="item.selected">done</mat-icon>{{ item.name }}</button>
 </mat-menu>
 
 <div *ngIf="dataSource" class="example-container mat-elevation-z8">

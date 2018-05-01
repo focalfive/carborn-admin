@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatButtonModule, MatMenuModule, MatProgressSpinnerModule,
-  MatTableModule, MatSortModule } from '@angular/material';
+import { MatButtonModule,  MatIconModule, MatMenuModule,
+  MatProgressSpinnerModule, MatTableModule, MatSortModule
+} from '@angular/material';
 
 import { DataRoutingModule } from './data-routing.module';
 import { DataComponent } from './data.component';
@@ -13,6 +14,7 @@ import { DataService } from './shared/data.service';
     CommonModule,
     DataRoutingModule,
     MatButtonModule,
+    MatIconModule,
     MatMenuModule,
     MatProgressSpinnerModule,
     MatTableModule,

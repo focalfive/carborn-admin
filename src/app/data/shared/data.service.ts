@@ -2,17 +2,18 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
-import { Data } from '../shared/data.model'
+import { Column } from '../shared/column.model';
+import { Data } from '../shared/data.model';
+import { LocalStorageService } from '../../shared/local-storage.service';
 import { environment } from '../../../environments/environment';
 const API_KEY: string = environment.mLabApiKey;
 
 @Injectable()
 export class DataService {
 
-  hasStoredColumns = false;
-
   constructor(
     private http: Http,
+    private localStorageService: LocalStorageService,
   ) { }
 
   getList(): Observable<Data[]> {
@@ -47,6 +48,36 @@ export class DataService {
       });
     });
     return columns;
+  }
+
+  private getStoredColumnsLocalStorageId(id: string): string {
+    return `carborn_admin_data_service.column.${id}`;
+  }
+
+  getStoredColumns(id: string): Column[] {
+    const key = this.getStoredColumnsLocalStorageId(id);
+    const columns = this.localStorageService.get(key);
+    if (columns === null) {
+      return [];
+    }
+    return columns;
+  }
+
+  setStoredColumns(id: string, columns: Column[]) {
+    const key = this.getStoredColumnsLocalStorageId(id);
+    this.localStorageService.set(key, columns);
+  }
+
+  getDispayColumnKeys(columns: Column[]): string[] {
+    const keys: string[] = [];
+    if (columns.length > 0) {
+      columns.map(column => {
+        if (column.selected) {
+          keys.push(column.key);
+        }
+      });
+    }
+    return keys;
   }
 
 }

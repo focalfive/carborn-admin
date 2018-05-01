@@ -3,7 +3,7 @@ import { Observable, BehaviorSubject } from 'rxjs/Rx';
 
 import { Cookie } from '../util/cookie';
 import { SharedModule } from './shared.module';
-import { UserService } from './shared/user.service';
+import { UserService } from './user.service';
 
 @Injectable()
 export class User {

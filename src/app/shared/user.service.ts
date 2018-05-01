@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
-import { environment } from '../../../environments/environment';
+import { environment } from '../../environments/environment';
 const API_KEY: string = environment.mLabApiKey;
 const ADMIN_ID: string = environment.mLabApiAdminObjectId;
 
