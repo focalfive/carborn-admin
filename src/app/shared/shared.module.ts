@@ -4,7 +4,8 @@ import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material';
 
 import { GnbComponent } from './gnb/gnb.component';
-import { UserService } from './shared/user.service';
+import { LocalStorageService } from './local-storage.service';
+import { UserService } from './user.service';
 
 @NgModule({
   imports: [
@@ -13,7 +14,10 @@ import { UserService } from './shared/user.service';
     MatButtonModule,
   ],
   exports: [GnbComponent],
-  providers: [UserService],
+  providers: [
+    LocalStorageService,
+    UserService,
+  ],
   declarations: [GnbComponent],
 })
 export class SharedModule {
