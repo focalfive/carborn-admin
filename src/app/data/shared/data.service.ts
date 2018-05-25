@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Headers, Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
+import { Car } from '../shared/car.model';
 import { Column } from '../shared/column.model';
 import { Data } from '../shared/data.model';
 import { LocalStorageService } from '../../shared/local-storage.service';
@@ -10,6 +11,8 @@ const API_KEY: string = environment.mLabApiKey;
 
 @Injectable()
 export class DataService {
+
+  private readonly HEADERS = new Headers({ 'Content-Type': 'application/json' });
 
   constructor(
     private http: Http,
@@ -28,6 +31,18 @@ export class DataService {
 
   get(id: string): Observable<Data> {
     return this.http.get(`https://api.mlab.com/api/1/databases/carborn/collections/cars/${id}/?apiKey=${API_KEY}`)
+      .map((res: Response) => new Data(res.json()))
+      .catch((error: any) => Observable.throw(error || 'Server error'));
+  }
+
+  set(id: string, data: Data): Observable<Data> {
+    return this.http.put(`https://api.mlab.com/api/1/databases/carborn/collections/cars/${id}/?apiKey=${API_KEY}`, JSON.stringify({ '$set': data }), { headers: this.HEADERS })
+      .map((res: Response) => new Data(res.json()))
+      .catch((error: any) => Observable.throw(error || 'Server error'));
+  }
+
+  setCars(id: string, cars: Car[]): Observable<Data> {
+    return this.http.put(`https://api.mlab.com/api/1/databases/carborn/collections/cars/${id}/?apiKey=${API_KEY}`, JSON.stringify({ '$set': { 'cars': cars } }), { headers: this.HEADERS })
       .map((res: Response) => new Data(res.json()))
       .catch((error: any) => Observable.throw(error || 'Server error'));
   }

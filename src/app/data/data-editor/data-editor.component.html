@@ -8,16 +8,23 @@
 <mat-menu #columnMenu="matMenu">
   <button mat-menu-item *ngFor="let item of columns" (click)="columnMenuDidSelect($event, item.key)"><mat-icon *ngIf="item.selected">done</mat-icon>{{ item.name }}</button>
 </mat-menu>
+<div class="table-box">
+  <div *ngIf="dataSource" class="data-container mat-elevation-z8">
+    <mat-table #table [dataSource]="dataSource" matSort>
 
-<div *ngIf="dataSource" class="example-container mat-elevation-z8">
-  <mat-table #table [dataSource]="dataSource" matSort>
+      <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> {{column}} </mat-header-cell>
+        <mat-cell *matCellDef="let car"> {{car[column]}} </mat-cell>
+      </ng-container>
 
-    <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> {{column}} </mat-header-cell>
-      <mat-cell *matCellDef="let car"> {{car[column]}} </mat-cell>
-    </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns; let i = index"
+          (click)="rowDidClick(i)" (dblclick)="rowDidDoubleClick(i)" [class.selected]="i === selectedIndex">
+      </mat-row>
+    </mat-table>
+  </div>
+</div>
 
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-  </mat-table>
+<div class="progress-cover" *ngIf="isLoading">
+  <mat-spinner color="accent"></mat-spinner>
 </div>
