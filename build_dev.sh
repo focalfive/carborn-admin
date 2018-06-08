@@ -24,4 +24,4 @@ docker rmi ${IMAGE_NAME}
 
 docker build -t ${IMAGE_NAME} .
 
-docker run --name ${CONTAINER_NAME} -d -p ${TARGET_PORT}:80 ${IMAGE_NAME}
+docker run --name ${CONTAINER_NAME} -d -p ${TARGET_PORT}:4200 ${IMAGE_NAME}

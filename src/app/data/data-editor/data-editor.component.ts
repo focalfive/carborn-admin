@@ -15,6 +15,13 @@ import { Data } from '../shared/data.model';
 })
 export class DataEditorComponent implements OnChanges, OnInit {
 
+  private touchX: number;
+  private touchY: number;
+  private longTapCancelDistanceX = 10;
+  private longTapCancelDistanceY = 10;
+  private longTapSelectedIndex: number = null;
+  private longTapTimeout: number;
+  private longTapTimeoutDelay = 1000;
   isLoading = true;
   dataList: Data[] = [];
   data: Data;
@@ -152,6 +159,10 @@ export class DataEditorComponent implements OnChanges, OnInit {
   }
 
   rowDidDoubleClick(index) {
+    this.editRow(index);
+  }
+
+  editRow(index) {
     this.selectedIndex = this.selectedIndex === index ? undefined : index;
     const car = Object.assign({}, this.data.cars[index]);
     let dialogRef = this.dialog.open(DataRowEditorDialogComponent, {
@@ -167,6 +178,55 @@ export class DataEditorComponent implements OnChanges, OnInit {
       }
       this.updateData(this.selectedIndex, result);
     });
+  }
+
+  rowDidTouchStart(event, index) {
+    console.log('rowDidTouchStart', event.targetTouches, index);
+    if (event.targetTouches.length === 0) {
+      return;
+    }
+    this.cancelLongTap();
+    const firstTouch = event.targetTouches[0];
+    this.touchX = firstTouch.clientX;
+    this.touchY = firstTouch.clientY;
+    console.log('rowDidTouchStart', index);
+    this.longTapSelectedIndex = index;
+    this.longTapTimeout = setTimeout(this.rowDidLongTap, this.longTapTimeoutDelay);
+  }
+
+  rowDidTouchMove(event, index) {
+    console.log('rowDidTouchMove', event.targetTouches, index);
+    if (event.targetTouches.length === 0) {
+      return;
+    }
+    const firstTouch = event.targetTouches[0];
+    if (Math.abs(firstTouch.clientX - this.touchX) > this.longTapCancelDistanceX ||
+      Math.abs(firstTouch.clientY - this.touchY) > this.longTapCancelDistanceY) {
+      this.cancelLongTap();
+    }
+  }
+
+  cancelLongTap() {
+    this.longTapSelectedIndex = null;
+    if (this.longTapTimeout >= 0) {
+      clearTimeout(this.longTapTimeout);
+    }
+  }
+
+  rowDidLongTap = () => {
+    if (this.longTapTimeout >= 0) {
+      clearTimeout(this.longTapTimeout);
+    }
+    const index = this.longTapSelectedIndex;
+    console.log('rowDidLongTap', index);
+    if (typeof index !== 'number' ||
+      index < 0 ||
+      index >= this.data.cars.length) {
+      return;
+    }
+
+    this.editRow(index);
+    this.longTapSelectedIndex = null;
   }
 
 }
