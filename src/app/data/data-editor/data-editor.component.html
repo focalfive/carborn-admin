@@ -22,11 +22,12 @@
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns; let i = index"
-          (click)="rowDidClick(i)" (dblclick)="rowDidDoubleClick(i)" [class.selected]="i === selectedIndex">
+          (click)="rowDidClick(i)" (dblclick)="rowDidDoubleClick(i)"
+          (touchstart)="rowDidTouchStart($event, i)" (touchmove)="rowDidTouchMove($event, i)" [class.selected]="i === selectedIndex">
       </mat-row>
     </mat-table>
   </div>
   <div *ngIf="!dataSource" class="no-data-selected">
-      Select any version!
+    Select any version!
   </div>
 </div>
