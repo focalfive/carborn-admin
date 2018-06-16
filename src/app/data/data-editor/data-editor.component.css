@@ -11,6 +11,18 @@
   padding: 20px;
 }
 
+.table-box button.save-button {
+  position: fixed;
+  right: -5px;
+  bottom: -6px;
+  z-index: 100;
+  background-color: rgb(244, 67, 54);
+}
+
+.table-box button.save-button mat-icon {
+  font-size: 22px;
+}
+
 .table-container {
   overflow-x: auto;
 }
@@ -42,8 +54,16 @@ table.data-table td {
 }
 
 table.data-table th {
+  position: relative;
   padding: 10px 5px;
   box-sizing: border-box;
+  cursor: pointer;
+}
+
+table.data-table th mat-icon {
+  position: absolute;
+  vertical-align: text-top;
+  height: 14px;
 }
 
 table.data-table th .fixed-column {
@@ -56,6 +76,7 @@ table.data-table th .fixed-column > div {
 
 table.data-table td input[type="text"] {
   padding: 0 5px;
+  margin: 1px;
   font-family: Roboto,"Helvetica Neue",sans-serif;
   font-size: 12px;
   font-weight: 500;
@@ -63,7 +84,7 @@ table.data-table td input[type="text"] {
   text-align: left;
   vertical-align: middle;
   border: none;
-  min-height: 56px;
+  min-height: 54px;
 }
 
 table.data-table th:first-of-type,

@@ -11,5 +11,6 @@ export class Car extends BaseModel {
   });
 
   id: string;
+  index: number;
 
 }

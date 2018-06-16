@@ -23,8 +23,11 @@ export class DataEditorComponent implements AfterViewInit, OnChanges, OnDestroy,
   isLoading = true;
   dataList: Data[] = [];
   data: Data;
+  cars: Car[];
   displayedColumns: string[] = [];
   columns: Column[] = [];
+  sortTargetColumn = -1;
+  isSortAscending = true;
   @Input() id: string = null;
   get dataId(): string {
     return this.id;
@@ -121,6 +124,10 @@ export class DataEditorComponent implements AfterViewInit, OnChanges, OnDestroy,
 
   parseData(data: Data) {
     this.data = data;
+    this.cars = data.cars.map((car, i) => {
+      car.index = i;
+      return car;
+    });
     const keys = this.dataService.getAllKeys(data.cars);
     this.columns = this.dataService.getStoredColumns(this.id);
     if (!Array.isArray(this.columns) || this.columns.length === 0) {
@@ -192,6 +199,59 @@ export class DataEditorComponent implements AfterViewInit, OnChanges, OnDestroy,
       this.dataService.setStoredColumns(this.id, this.columns);
     }
     event.stopPropagation();
+  }
+
+  sortTargetDidSelect(index: number) {
+    console.log('sort by column index', index);
+    if (this.sortTargetColumn === index) {
+      this.isSortAscending = !this.isSortAscending;
+    } else {
+      this.sortTargetColumn = index;
+      this.isSortAscending = true;
+    }
+
+    this.sort();
+  }
+
+  sort() {
+    if (!Array.isArray(this.cars) || this.cars.length === 0) {
+      return;
+    }
+    if (this.sortTargetColumn < 0) {
+      return;
+    }
+    const key = this.displayedColumns[this.sortTargetColumn];
+    this.cars = this.cars.sort((left, right) => {
+      const isNotANumber = isNaN(Number(left[key])) || isNaN(Number(right[key]));
+      const leftValue = isNotANumber ? left[key] : Number(left[key]);
+      const rightValue = isNotANumber ? right[key] : Number(right[key]);
+      if (leftValue > rightValue) {
+        return this.isSortAscending ? 1 : -1;
+      }
+      if(leftValue < rightValue) {
+        return this.isSortAscending ? -1 : 1;
+      }
+      return 0;
+    });
+  }
+
+  saveButtonDidSelect() {
+    this.isLoading = true;
+    let carDictionary = {};
+    this.cars.map(car => {
+      carDictionary[car.index] = car;
+    });
+    const cars = this.data.cars.map(car => carDictionary[car.index]);
+    this.dataService.setCars(this.id, cars).subscribe(
+      (data: Data) => {
+        this.isLoading = false;
+        this.parseData(data);
+      },
+      err => {
+        this.isLoading = false;
+        console.error('Error', err);
+      }
+    );
   }
 
   ngOnDestroy() {
