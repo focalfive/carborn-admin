@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MatButtonModule, MatCheckboxModule, MatDialogModule, MatIconModule, MatInputModule, MatMenuModule,
+import { MatButtonModule, MatCheckboxModule, MatIconModule, MatInputModule, MatMenuModule,
   MatProgressSpinnerModule, MatTableModule, MatSortModule
 } from '@angular/material';
 
 import { DataRoutingModule } from './data-routing.module';
 import { DataComponent } from './data.component';
 import { DataEditorComponent } from './data-editor/data-editor.component';
-import { DataRowEditorDialogComponent } from './data-editor/data-row-editor-dialog.component';
+// import { DataRowEditorDialogComponent } from './data-editor/data-row-editor-dialog.component';
 import { DataService } from './shared/data.service';
 
 @NgModule({
@@ -18,7 +18,7 @@ import { DataService } from './shared/data.service';
     FormsModule,
     MatButtonModule,
     MatCheckboxModule,
-    MatDialogModule,
+    // MatDialogModule,
     MatIconModule,
     MatInputModule,
     MatMenuModule,
@@ -29,9 +29,9 @@ import { DataService } from './shared/data.service';
   declarations: [
     DataComponent,
     DataEditorComponent,
-    DataRowEditorDialogComponent,
+    // DataRowEditorDialogComponent,
   ],
-  entryComponents: [DataRowEditorDialogComponent],
+  // entryComponents: [DataRowEditorDialogComponent],
   providers: [DataService],
 })
 export class DataModule { }

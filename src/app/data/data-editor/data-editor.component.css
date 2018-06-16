@@ -6,14 +6,76 @@
 .mat-icon {
   font-size: 14px;
 }
+
 .table-box {
   padding: 20px;
 }
-.data-container {
-  display: flex;
-  flex-direction: column;
-  min-width: 300px;
+
+.table-container {
+  overflow-x: auto;
 }
+
+table.data-table thead {
+  display: block;
+}
+
+table.data-table tbody {
+  display: block;
+  overflow-y: auto;
+  -webkit-transition: height .25s; /* Safari */
+  transition: height .25s;
+}
+
+table.data-table tr {
+  min-width: 300px;
+  border-bottom: 1px solid rgba(0,0,0,.12);
+}
+
+table.data-table th,
+table.data-table td {
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(0,0,0,.54);
+  text-align: left;
+  vertical-align: middle;
+}
+
+table.data-table th {
+  padding: 10px 5px;
+  box-sizing: border-box;
+}
+
+table.data-table th .fixed-column {
+  position: relative;
+}
+
+table.data-table th .fixed-column > div {
+  position: fixed;
+}
+
+table.data-table td input[type="text"] {
+  padding: 0 5px;
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(0,0,0,.54);
+  text-align: left;
+  vertical-align: middle;
+  border: none;
+  min-height: 56px;
+}
+
+table.data-table th:first-of-type,
+table.data-table td:first-of-type {
+  padding-left: 24px;
+}
+
+table.data-table th:last-of-type,
+table.data-table td:last-of-type {
+  padding-right: 24px;
+}
+
 .no-data-selected {
     text-align: center;
     line-height: 200px;

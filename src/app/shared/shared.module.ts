@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material';
 import { GnbComponent } from './gnb/gnb.component';
 import { LocalStorageService } from './local-storage.service';
 import { UserService } from './user.service';
+import { WindowService } from './window.service';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { UserService } from './user.service';
   providers: [
     LocalStorageService,
     UserService,
+    WindowService,
   ],
   declarations: [GnbComponent],
 })
