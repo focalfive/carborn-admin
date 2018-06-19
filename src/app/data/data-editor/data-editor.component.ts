@@ -129,13 +129,45 @@ export class DataEditorComponent implements AfterViewInit, OnChanges, OnDestroy,
       return car;
     });
     const keys = this.dataService.getAllKeys(data.cars);
+    console.log('parseData keys', keys);
     this.columns = this.dataService.getStoredColumns(this.id);
-    if (!Array.isArray(this.columns) || this.columns.length === 0) {
+    console.log('parseData stored this.columns', this.columns);
+    if (Array.isArray(this.columns) && this.columns.length > 0) {
+      let isChanged = false;
+      let newKeys = Object.assign([], keys);
+      let oldKeys = this.columns.map(column => column.key);
+      let removeKeyIndexes = [];
+
+      for (let oldKey of oldKeys) {
+        const index = newKeys.indexOf(oldKey);
+        if (index >= 0) {
+          newKeys.splice(index, 1);
+        } else {
+          removeKeyIndexes.push(index);
+        }
+      }
+      if (removeKeyIndexes.length > 0) {
+        isChanged = true;
+        removeKeyIndexes.map(index => {
+          this.columns.splice(index, 1);
+        });
+      }
+      if (newKeys.length > 0) {
+        isChanged = true;
+        newKeys.map(key => {
+          this.columns.push({ key: key, name: key, selected: false });
+        });
+      }
+      if (isChanged) {
+        this.dataService.setStoredColumns(this.id, this.columns);
+      }
+    } else {
       this.columns = keys.map((key, index) => {
         return { key: key, name: key, selected: index < 5 };
       });
       this.dataService.setStoredColumns(this.id, this.columns);
     }
+    console.log('parseData this.columns', this.columns);
     this.displayedColumns = this.dataService.getDispayColumnKeys(this.columns);
     setTimeout(this.resizeTable.bind(this), 0);
   }
@@ -167,7 +199,8 @@ export class DataEditorComponent implements AfterViewInit, OnChanges, OnDestroy,
     const head = this.tableElement.nativeElement.querySelector('thead');
     const body = this.tableElement.nativeElement.querySelector('tbody');
     const tableBoundingRect = this.tableElement.nativeElement.getBoundingClientRect();
-    const bodyHeight = window.document.body.clientHeight - (tableBoundingRect.top + 20 + window.scrollY + head.scrollHeight);
+    const marginBottom = 20;
+    const bodyHeight = window.document.body.clientHeight - (tableBoundingRect.top + marginBottom + window.scrollY + head.scrollHeight);
     body.style.height = bodyHeight + 'px';
   }
 
@@ -197,6 +230,7 @@ export class DataEditorComponent implements AfterViewInit, OnChanges, OnDestroy,
     if (hasChanges) {
       this.displayedColumns = this.dataService.getDispayColumnKeys(this.columns);
       this.dataService.setStoredColumns(this.id, this.columns);
+      setTimeout(this.resizeTableHeader.bind(this), 0);
     }
     event.stopPropagation();
   }
@@ -242,6 +276,7 @@ export class DataEditorComponent implements AfterViewInit, OnChanges, OnDestroy,
       carDictionary[car.index] = car;
     });
     const cars = this.data.cars.map(car => carDictionary[car.index]);
+    console.log('save', cars);
     this.dataService.setCars(this.id, cars).subscribe(
       (data: Data) => {
         this.isLoading = false;
@@ -252,6 +287,69 @@ export class DataEditorComponent implements AfterViewInit, OnChanges, OnDestroy,
         console.error('Error', err);
       }
     );
+  }
+
+  addColButtonDidSelect() {
+    const columnName = prompt('Enter column name to add.');
+    const keys = this.columns.map(column => column.key);
+    if (keys.indexOf(columnName) >= 0) {
+      alert('"' + columnName + '" is a name that already exists.');
+      return;
+    }
+    this.columns.push({ key: columnName, name: columnName, selected: true });
+    this.displayedColumns = this.dataService.getDispayColumnKeys(this.columns);
+    this.dataService.setStoredColumns(this.id, this.columns);
+    setTimeout(this.resizeTableHeader.bind(this), 0);
+  }
+
+  removeColButtonDidSelect() {
+    const columnName = prompt('Enter column name to delete');
+    const keys = this.columns.map(column => column.key);
+    const index = keys.indexOf(columnName);
+    if (index < 0) {
+      alert('The name "' + columnName + '" you entered could not be found.');
+      return;
+    }
+    this.removeColumn(columnName);
+  }
+
+  removeColumn(columnName: string) {
+    if (prompt('If you enter the name of the column you want to delete again, the deletion will proceed!') !== columnName) {
+      alert('The name you entered does not match.');
+      return;
+    }
+    this.isLoading = true;
+    let carDictionary = {};
+    this.cars.map(car => {
+      delete car[columnName];
+      carDictionary[car.index] = car;
+    });
+    const cars = this.data.cars.map(car => carDictionary[car.index]);
+    console.log('save', cars);
+    this.dataService.setCars(this.id, cars).subscribe(
+      (data: Data) => {
+        this.isLoading = false;
+        this.parseData(data);
+      },
+      err => {
+        this.isLoading = false;
+        console.error('Error', err);
+      }
+    );
+  }
+
+  addRowButtonDidSelect() {
+    let index: number = -1;
+    this.data.cars.map(car => {
+      if (car.index > index) {
+        index = car.index;
+      }
+    });
+    index += 1;
+    let car = new Car();
+    car.index = index;
+    this.cars.unshift(car);
+    this.data.cars.push(car);
   }
 
   ngOnDestroy() {

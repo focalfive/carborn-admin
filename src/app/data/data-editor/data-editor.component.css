@@ -8,19 +8,50 @@
 }
 
 .table-box {
-  padding: 20px;
+  padding: 0 20px 0;
 }
 
-.table-box button.save-button {
-  position: fixed;
-  right: -5px;
-  bottom: -6px;
-  z-index: 100;
-  background-color: rgb(244, 67, 54);
+.action-box {
+  padding: 5px 20px;
 }
 
-.table-box button.save-button mat-icon {
-  font-size: 22px;
+.action-item-left {
+  float: left;
+}
+
+.action-item-right {
+  float: right;
+}
+
+.action-box:after {
+  display: block;
+  clear: both;
+  content: '';
+}
+
+.action-box .action-item-right button {
+  color: #fff;
+}
+
+.action-box .action-item-right button mat-icon {
+  font-size: 17px;
+  vertical-align: sub;
+}
+
+button.remove-col-button {
+  background-color: #F4CDA5;
+}
+
+button.add-col-button {
+  background-color: #5DB5A4;
+}
+
+button.add-row-button {
+  background-color: #3C989E;
+}
+
+button.save-button {
+  background-color: #ED5276;
 }
 
 .table-container {
