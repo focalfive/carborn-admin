@@ -187,7 +187,7 @@ export class DataEditorComponent implements AfterViewInit, OnChanges, OnDestroy,
     const bodyFirstRow = body.querySelector('tr');
     const bodyFirstColumns = bodyFirstRow.querySelectorAll('td');
     const count = Math.min(headerColumns.length, bodyFirstColumns.length);
-    for (let i = 0; i < count; ++i) {
+    for (let i = 1; i < count; ++i) {
       headerColumns[i].style.width = bodyFirstColumns[i].scrollWidth + 'px';
     }
   }

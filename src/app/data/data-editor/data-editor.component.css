@@ -82,13 +82,17 @@ table.data-table td {
   color: rgba(0,0,0,.54);
   text-align: left;
   vertical-align: middle;
+  box-sizing: border-box;
 }
 
 table.data-table th {
   position: relative;
   padding: 10px 5px;
-  box-sizing: border-box;
   cursor: pointer;
+}
+
+table.data-table td:first-child {
+  padding-right: 5px;
 }
 
 table.data-table th mat-icon {
