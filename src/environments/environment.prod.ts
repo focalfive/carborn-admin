@@ -1,8 +1,13 @@
 export const environment = {
   production: true,
-  mLabApiKey: 'RVBlmzNJ6hMYAruIrDZtDfhUaKGKbbvQ',
-  mLabApiAdminObjectId: '5a168f0b734d1d3ed22d2509',
-  googleClientId: '598923188772-mnusf73277ui7pq88o4lh2tpqkhml460.apps.googleusercontent.com',
-  googleClientSecret: 'LeJR4jQbfvsazbFYk5L_-1Ui',
-  googleRedirectUri: 'http://slows.me/login',
+  firebase: {
+    apiKey: "AIzaSyChyVv1zVfjWA1VE1i3ZIcX9BtcyXWxgAo",
+    authDomain: "f5-carborn.firebaseapp.com",
+    databaseURL: "https://f5-carborn.firebaseio.com",
+    projectId: "f5-carborn",
+    storageBucket: "f5-carborn.appspot.com",
+    messagingSenderId: "598923188772",
+    appId: "1:598923188772:web:cb5514f6958665f2",
+    measurementId: "G-QV5Q4DERNB"
+  }
 };

@@ -1,31 +1,30 @@
-import { NgModule, Injector } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { MatButtonModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
-import { GnbComponent } from './gnb/gnb.component';
-import { LocalStorageService } from './local-storage.service';
-import { UserService } from './user.service';
-import { WindowService } from './window.service';
+import { HeaderComponent } from './components/header.component';
+
 
 @NgModule({
+  declarations: [
+    HeaderComponent,
+  ],
   imports: [
     CommonModule,
     RouterModule,
     MatButtonModule,
+    MatDividerModule,
+    MatIconModule,
+    MatMenuModule,
+    MatToolbarModule,
   ],
-  exports: [GnbComponent],
-  providers: [
-    LocalStorageService,
-    UserService,
-    WindowService,
+  exports: [
+    HeaderComponent,
   ],
-  declarations: [GnbComponent],
 })
-export class SharedModule {
-
-  static injector: Injector;
-  constructor(injector: Injector) {
-    SharedModule.injector = injector;
-  }
-}
+export class SharedModule { }

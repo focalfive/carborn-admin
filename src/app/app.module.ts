@@ -1,30 +1,38 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { environment } from '../environments/environment';
 
-import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { DataModule } from './data/data.module';
-import { LoginModule } from './login/login.module';
-import { PlayModule } from './play/play.module';
+import { AppComponent } from './app.component';
+import { AuthGuard } from './core/auth-guard';
+import { HomeModule } from './home/home.module';
+import { MenuModule } from './menu/menu.module';
+import { CarModule } from './car/car.module';
 import { SharedModule } from './shared/shared.module';
+import { UserModule } from './user/user.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
-    AppRoutingModule,
     BrowserAnimationsModule,
-    DataModule,
-    FormsModule,
-    HttpModule,
-    LoginModule,
-    PlayModule,
+    AppRoutingModule,
+    AngularFireModule.initializeApp(environment.firebase, 'finative'),
+    AngularFirestoreModule,
+    AngularFireAuthModule,
+    HomeModule,
+    MenuModule,
+    CarModule,
     SharedModule,
+    UserModule,
   ],
-  providers: [],
+  providers: [
+    AuthGuard,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
