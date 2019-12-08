@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, DocumentChangeAction } from '@angular/fire/firestore';
+import { Action, AngularFirestore, DocumentChangeAction, DocumentSnapshot, QueryDocumentSnapshot } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map, debounceTime } from 'rxjs/operators';
 
@@ -19,24 +19,44 @@ export class CarService {
       .snapshotChanges()
       .pipe(
         debounceTime(500),
-        map(this.parseCarCollection)
+        map(this.parseCarCollectionByChangeAction)
       );
   }
 
-  private parseCarCollection = (actions: DocumentChangeAction<Car>[]): CarKey[] => {
+  getItem(id: string): Observable<CarKey> {
+    console.log('getItem', id)
+    return this.db.doc<Car>(`cars/${id}`)
+      .snapshotChanges()
+      .pipe(
+        debounceTime(500),
+        map(this.parseCarModelByAction)
+      );
+  }
+
+  private parseCarCollectionByChangeAction = (actions: DocumentChangeAction<Car>[]): CarKey[] => {
     if (!actions) {
       return [];
     }
-    return actions.map(this.parseCarModel).filter(action => !!action);
+    return actions.map(this.parseCarModelByChangeAction).filter(action => !!action);
   }
   
-  private parseCarModel = (action: DocumentChangeAction<Car>): CarKey => {
+  private parseCarModelByChangeAction = (action: DocumentChangeAction<Car>): CarKey => {
     if (!action) {
       return null;
     }
     const key = action.payload.doc.id;
     const data = action.payload.doc.data();
     return { key, ...data } as CarKey;
+  }
+
+  private parseCarModelByAction = (action: Action<QueryDocumentSnapshot<Car>>): CarKey => {
+    if (!action) {
+      return null;
+    }
+    console.log('parseCarModelByAction', action.payload.data())
+    const key = action.payload.id
+    const data = action.payload.data();
+    return { key, ...data} as CarKey;
   }
 
 }
