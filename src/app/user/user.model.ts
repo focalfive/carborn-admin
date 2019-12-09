@@ -3,5 +3,5 @@ export class User {
   email: string;
   photoURL?: string;
   displayName?: string;
-  isVerified: boolean;
+  isVerified?: boolean;
 }

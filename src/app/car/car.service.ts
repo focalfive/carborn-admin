@@ -33,6 +33,19 @@ export class CarService {
       );
   }
 
+  updateItem(id: string, formItems: any[]) {
+    let model = formItems.reduce((model, item) => {
+      if (typeof item['title'] === 'string' && typeof item['value'] !== 'undefined') {
+        model[item.title] = item.value
+      }
+      return model
+    }, {})
+    console.log('fire update', model)
+    let doc = this.db.doc<Car>(`cars/${id}`)
+    console.log('doc', doc)
+    doc.update(model)
+  }
+
   private parseCarCollectionByChangeAction = (actions: DocumentChangeAction<Car>[]): CarKey[] => {
     if (!actions) {
       return [];
@@ -50,6 +63,7 @@ export class CarService {
   }
 
   private parseCarModelByAction = (action: Action<QueryDocumentSnapshot<Car>>): CarKey => {
+    console.log('parseCarModelByAction')
     if (!action) {
       return null;
     }

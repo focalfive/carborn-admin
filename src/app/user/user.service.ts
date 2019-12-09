@@ -43,13 +43,12 @@ export class UserService {
 
   private updateUserData(user) {
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(`user/${user.uid}`);
-
+    
     const data = {
       uid: user.uid,
       email: user.email,
       displayName: user.displayName,
       photoURL: user.photoURL,
-      isVerified: false,
     }
 
     return userRef.set(data, { merge: true })
