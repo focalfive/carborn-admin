@@ -34,12 +34,39 @@ export class CarService {
   }
 
   updateItem(id: string, formItems: any[]) {
+    // let model = formItems.reduce((model, item) => {
+    //   if (typeof item['title'] === 'string' && typeof item['value'] !== 'undefined') {
+    //     console.log(item.title, item.value, typeof item.value)
+    //     model[item.title] = item.value
+    //   }
+    //   return model
+    // }, {})
+    let meta = new Car()
+    console.log('type', Car.prototype)
     let model = formItems.reduce((model, item) => {
       if (typeof item['title'] === 'string' && typeof item['value'] !== 'undefined') {
-        model[item.title] = item.value
+        let key = item.title
+        let typeString = typeof meta[key]
+        console.log(key, item.value, typeof item.value, meta, meta[key], typeString)
+        if (typeof item.value === typeString) {
+          model[key] = item.value
+        } else {
+          switch (typeString) {
+            case 'string':
+              model[key] = String(item.value)
+              break
+    
+            case 'number':
+              if (!isNaN(item.value)) {
+                model[key] = Number(item.value)
+              }
+              break
+          }
+        }
       }
       return model
     }, {})
+
     console.log('fire update', model)
     let doc = this.db.doc<Car>(`cars/${id}`)
     console.log('doc', doc)
