@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MenuComponent } from './menu.component';
 
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
+import { SharedModule } from '../shared/shared.module';
+import { MenuComponent } from './menu.component';
 
 
 @NgModule({
@@ -10,6 +13,8 @@ import { MenuComponent } from './menu.component';
   ],
   imports: [
     CommonModule,
+    MatProgressSpinnerModule,
+    SharedModule,
   ],
   // exports: [
   //   MenuComponent,

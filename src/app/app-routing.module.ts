@@ -6,6 +6,7 @@ import { HomeComponent } from './home/home.component';
 import { MenuComponent } from './menu/menu.component';
 import { CarListComponent } from './car/car-list.component';
 import { CarComponent } from './car/car.component';
+import { SchemeComponent } from './scheme/scheme.component';
 import { UserLoginComponent } from './user/user-login.component';
 import { UserVerifyComponent } from './user/user-verify.component';
 
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'menu', component: MenuComponent,  canActivate: [AuthGuard] },
   { path: 'cars', component: CarListComponent,  canActivate: [AuthGuard] },
   { path: 'car/:id', component: CarComponent,  canActivate: [AuthGuard] },
+  { path: 'scheme', component: SchemeComponent,  canActivate: [AuthGuard] },
   { path: 'login', component: UserLoginComponent },
   { path: 'verify', component: UserVerifyComponent },
 ];

@@ -11,6 +11,7 @@ import { AuthGuard } from './core/auth-guard';
 import { HomeModule } from './home/home.module';
 import { MenuModule } from './menu/menu.module';
 import { CarModule } from './car/car.module';
+import { SchemeModule } from './scheme/scheme.module';
 import { SharedModule } from './shared/shared.module';
 import { UserModule } from './user/user.module';
 
@@ -27,6 +28,7 @@ import { UserModule } from './user/user.module';
     HomeModule,
     MenuModule,
     CarModule,
+    SchemeModule,
     SharedModule,
     UserModule,
   ],
