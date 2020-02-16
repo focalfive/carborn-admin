@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+
+import { MenuService } from './menu.service';
 
 @Component({
   selector: 'app-menu',
@@ -7,9 +11,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
-  constructor() { }
+  private collection: Observable<any[]>
+
+  constructor(
+    private router: Router,
+    private menuService: MenuService,
+  ) { }
 
   ngOnInit() {
+    this.collection = this.menuService.getList()
   }
 
 }
