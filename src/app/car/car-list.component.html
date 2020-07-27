@@ -1,0 +1,7 @@
+<app-header></app-header>
+<mat-spinner class="spin-prog" *ngIf="isLoading" diameter="50"></mat-spinner>
+<div class="list-container">
+    <mat-nav-list>
+        <mat-list-item *ngFor="let model of collection | async" (click)="listDidSelect(model.key)">{{ model.display_name }}</mat-list-item>
+    </mat-nav-list>
+</div>

@@ -1,0 +1,9 @@
+$carborn-theme-primary: mat-palette($mat-grey, 900);
+$carborn-theme-accent: mat-palette($mat-deep-orange, A400);
+$carborn-theme-warn: mat-palette($mat-grey, 300);
+
+$carborn-theme: mat-light-theme(
+    $carborn-theme-primary,
+    $carborn-theme-accent,
+    $carborn-theme-warn
+);

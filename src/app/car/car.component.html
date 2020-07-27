@@ -1,0 +1,12 @@
+<app-header></app-header>
+<div class="car-detail">
+  <form name="car-detail-form">
+    <mat-form-field *ngFor="let item of formItems" class="car-detail-full-width">
+      <input matInput [placeholder]="item.title" [name]="item.title" [(ngModel)]="item.value">
+    </mat-form-field>
+  </form>
+  <div class="car-detail-control">
+      <button mat-raised-button routerLink="/cars">Cancel</button>
+      <button mat-raised-button color="primary" (click)="saveDidSelect()">Save</button>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+.global-control {
+  padding: 5px;
+}
+.global-control > button {
+  margin: 5px;
+}
+
+.menu-tree-invisible {
+  display: none;
+}
+
+.menu-tree ul {
+  padding-left: 20px;
+}
+
+.menu-tree ul,
+.menu-tree li {
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style-type: none;
+}
+
+.btn-list-more {
+  position: absolute;
+  right: 0;
+}

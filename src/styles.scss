@@ -1,1 +1,19 @@
-/* You can add global styles to this file, and also import other style files */
+@import "reset-css";
+@import '~@angular/material/theming';
+@include mat-core();
+@import 'theme.scss';
+
+// specify theme class eg: <body class="carborn-theme"> ... </body>
+.carborn-theme {
+  @include angular-material-theme($carborn-theme);
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.base-container {
+  padding: 0 20px;
+}

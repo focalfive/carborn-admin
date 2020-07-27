@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "carborn-admin"
+    }
+  },
+  "defaultProject": "carborn-admin",
+  "cli": {
+    "analytics": false
+  }
 }

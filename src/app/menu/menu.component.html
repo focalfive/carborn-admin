@@ -1,0 +1,75 @@
+<app-header></app-header>
+<mat-spinner class="spin-prog" *ngIf="isLoading" diameter="50"></mat-spinner>
+<div class="list-container">
+  <div class="global-control">
+    <button mat-raised-button (click)="expandAllItem()">
+      <mat-icon class="mat-icon-rtl-mirror">unfold_more</mat-icon>
+      Expand
+    </button>
+    <button mat-raised-button (click)="collapseAllItem()">
+      <mat-icon class="mat-icon-rtl-mirror">unfold_less</mat-icon>
+      Collapse
+    </button>
+    <button mat-raised-button>
+      <mat-icon class="mat-icon-rtl-mirror">add</mat-icon>
+      Add Root Item
+    </button>
+  </div>
+  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="menu-tree">
+    <!-- This is the tree node template for leaf nodes -->
+    <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+      <li class="mat-tree-node">
+        <!-- use a disabled button to provide padding for tree leaf -->
+        <button mat-icon-button disabled></button>
+        {{node.name}}
+        <button class="btn-list-more" mat-icon-button aria-label="more" [matMenuTriggerFor]="menuNode">
+          <mat-icon class="mat-icon-rtl-mirror">more_vert</mat-icon>
+        </button>
+        <mat-menu #menuNode="matMenu">
+          <button mat-menu-item>
+            <mat-icon class="mat-icon-rtl-mirror">forward</mat-icon>
+            Move
+          </button>
+          <button mat-menu-item>
+            <mat-icon class="mat-icon-rtl-mirror">delete</mat-icon>
+            Delete
+          </button>
+        </mat-menu>
+      </li>
+    </mat-tree-node>
+    <!-- This is the tree node template for expandable nodes -->
+    <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+      <li>
+        <div class="mat-tree-node">
+          <button mat-icon-button matTreeNodeToggle
+                  [attr.aria-label]="'toggle ' + node.name">
+            <mat-icon class="mat-icon-rtl-mirror">
+              {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+            </mat-icon>
+          </button>
+          {{node.name}}
+          <button class="btn-list-more" mat-icon-button aria-label="more" [matMenuTriggerFor]="menuDir">
+            <mat-icon class="mat-icon-rtl-mirror">more_vert</mat-icon>
+          </button>
+          <mat-menu #menuDir="matMenu">
+            <button mat-menu-item>
+              <mat-icon class="mat-icon-rtl-mirror">add</mat-icon>
+              Add New
+            </button>
+            <button mat-menu-item>
+              <mat-icon class="mat-icon-rtl-mirror">forward</mat-icon>
+              Move
+            </button>
+            <button mat-menu-item>
+              <mat-icon class="mat-icon-rtl-mirror">delete</mat-icon>
+              Delete
+            </button>
+          </mat-menu>
+        </div>
+        <ul [class.menu-tree-invisible]="!treeControl.isExpanded(node)">
+          <ng-container matTreeNodeOutlet></ng-container>
+        </ul>
+      </li>
+    </mat-nested-tree-node>
+  </mat-tree>
+</div>

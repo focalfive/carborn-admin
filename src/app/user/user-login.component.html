@@ -1,0 +1,9 @@
+<div class="login-box">
+  <div *ngIf="user | async; else showLogin">
+      <button *ngIf="(user | async)?.isAdmin" mat-flat-button color="primary" routerLink="/home">Go Home</button>
+      <button mat-button (click)="logout()">Logout</button>
+  </div>
+  <ng-template #showLogin>
+      <button mat-flat-button color="primary" (click)="login()">Login with Google</button>
+  </ng-template>
+</div>
