@@ -1,0 +1,166 @@
+:host {
+  display: block;
+  position: relative;
+}
+
+.mat-icon {
+  font-size: 14px;
+}
+
+.table-box {
+  padding: 0 20px 0;
+}
+
+.action-box {
+  padding: 5px 20px;
+}
+
+.action-item-left {
+  float: left;
+}
+
+.action-item-right {
+  float: right;
+}
+
+.action-box:after {
+  display: block;
+  clear: both;
+  content: '';
+}
+
+.action-box .action-item-right button {
+  color: #fff;
+}
+
+.action-box .action-item-right button mat-icon {
+  font-size: 17px;
+  vertical-align: sub;
+}
+
+button.remove-col-button {
+  background-color: #F4CDA5;
+}
+
+button.add-col-button {
+  background-color: #5DB5A4;
+}
+
+button.add-row-button {
+  background-color: #3C989E;
+}
+
+button.save-button {
+  background-color: #ED5276;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+table.data-table thead {
+  display: block;
+}
+
+table.data-table tbody {
+  display: block;
+  overflow-y: auto;
+  -webkit-transition: height .25s; /* Safari */
+  transition: height .25s;
+}
+
+table.data-table tr {
+  min-width: 300px;
+  border-bottom: 1px solid rgba(0,0,0,.12);
+}
+
+table.data-table th,
+table.data-table td {
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(0,0,0,.54);
+  text-align: left;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+table.data-table th {
+  position: relative;
+  padding: 10px 5px;
+  cursor: pointer;
+}
+
+table.data-table td:first-child {
+  padding-right: 5px;
+}
+
+table.data-table th mat-icon {
+  position: absolute;
+  vertical-align: text-top;
+  height: 14px;
+}
+
+table.data-table th .fixed-column {
+  position: relative;
+}
+
+table.data-table th .fixed-column > div {
+  position: fixed;
+}
+
+table.data-table td input[type="text"] {
+  padding: 0 5px;
+  margin: 1px;
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(0,0,0,.54);
+  text-align: left;
+  vertical-align: middle;
+  border: none;
+  min-height: 54px;
+}
+
+table.data-table th:first-of-type,
+table.data-table td:first-of-type {
+  padding-left: 24px;
+}
+
+table.data-table th:last-of-type,
+table.data-table td:last-of-type {
+  padding-right: 24px;
+}
+
+.no-data-selected {
+    text-align: center;
+    line-height: 200px;
+}
+
+.mat-table {
+  overflow: auto;
+}
+
+mat-row.selected {
+  background: #FFE51F;
+}
+
+.cdk-overlay-pane {
+  overflow: auto;
+}
+
+.progress-cover {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+mat-spinner {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
