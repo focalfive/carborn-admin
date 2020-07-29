@@ -10,9 +10,9 @@
       <mat-icon class="mat-icon-rtl-mirror">unfold_less</mat-icon>
       Collapse
     </button>
-    <button mat-raised-button>
+    <button mat-raised-button (click)="addItemForRoot()">
       <mat-icon class="mat-icon-rtl-mirror">add</mat-icon>
-      Add Root Item
+      Add Item for Root
     </button>
   </div>
   <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="menu-tree">
@@ -26,11 +26,11 @@
           <mat-icon class="mat-icon-rtl-mirror">more_vert</mat-icon>
         </button>
         <mat-menu #menuNode="matMenu">
-          <button mat-menu-item>
+          <button mat-menu-item (click)="moveItem(node)">
             <mat-icon class="mat-icon-rtl-mirror">forward</mat-icon>
             Move
           </button>
-          <button mat-menu-item>
+          <button mat-menu-item (click)="deleteItem(node)">
             <mat-icon class="mat-icon-rtl-mirror">delete</mat-icon>
             Delete
           </button>
@@ -52,15 +52,15 @@
             <mat-icon class="mat-icon-rtl-mirror">more_vert</mat-icon>
           </button>
           <mat-menu #menuDir="matMenu">
-            <button mat-menu-item>
+            <button mat-menu-item (click)="addItemFor(node)">
               <mat-icon class="mat-icon-rtl-mirror">add</mat-icon>
               Add New
             </button>
-            <button mat-menu-item>
+            <button mat-menu-item (click)="moveItem(node)">
               <mat-icon class="mat-icon-rtl-mirror">forward</mat-icon>
               Move
             </button>
-            <button mat-menu-item>
+            <button mat-menu-item (click)="deleteItem(node)">
               <mat-icon class="mat-icon-rtl-mirror">delete</mat-icon>
               Delete
             </button>

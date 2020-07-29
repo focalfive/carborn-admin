@@ -20,7 +20,7 @@ import { MenuService } from './menu.service';
 })
 export class MenuComponent implements OnInit {
 
-  collection: Observable<any[]>;
+  collection: any[];
   treeControl = new NestedTreeControl<any>(node => node.children);
   dataSource = new MatTreeNestedDataSource<any>();
   isLoading = false;
@@ -34,6 +34,7 @@ export class MenuComponent implements OnInit {
     this.menuService.getMenuList().subscribe(
       data => {
         console.log('data', data);
+        this.collection = data;
         this.dataSource.data = data;
         this.treeControl.dataNodes = data;
       }
@@ -48,6 +49,43 @@ export class MenuComponent implements OnInit {
 
   collapseAllItem() {
     this.treeControl.collapseAll();
+  }
+
+  addItemForRoot() {
+    window.alert('TODO: addItemForRoot');
+  }
+
+  addItemFor(node) {
+    node.children.push({ name: 'test', children: [] });
+    console.log(this.collection);
+    window.alert(`TODO: addItemFor ${node.name} sync`);
+  }
+
+  deleteItem(node) {
+    if (this.deleteChild(this.collection, node)) {
+      console.log('deleted')
+      window.alert(`TODO: deleteItem ${node.name} sync`);
+    }
+    // console.log(this.collection);
+  }
+
+  deleteChild(collection, node): boolean {
+    for (let i = 0; i < collection.length; ++i) {
+      if (collection[i] === node) {
+        collection.splice(i, 1);
+        console.log('find');
+        return true;
+      }
+      console.log(i, collection[i], collection[i].children);
+      if (Array.isArray(collection[i].children) && this.deleteChild(collection[i].children, node)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  moveItem(node) {
+    window.alert('TODO: moveItem show dialog for select target');
   }
 
 }

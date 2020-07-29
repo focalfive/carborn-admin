@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import * as firebase from 'firebase';
+// import * as firebase from 'firebase';
 import { Observable } from 'rxjs';
 import { map, debounceTime } from 'rxjs/operators';
 
