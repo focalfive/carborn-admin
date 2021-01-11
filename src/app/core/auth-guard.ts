@@ -11,26 +11,28 @@ export class AuthGuard implements CanActivate {
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
 
-      return this.userService.user$.pipe(
-        take(1),
-        map(user => {
-          if (!user) {
-            return false;
-          }
-          if (user.isVerified) {
-            return true;
-          }
-          console.log('url', this.router.url);
-          this.userService.redirectUri = this.router.url;
-          this.router.navigate(['/verify']);
+    return this.userService.user$.pipe(
+      take(1),
+      map(user => {
+        if (!user) {
           return false;
-        }),
-        tap(loggedIn => {
-            if (!loggedIn) {
-                this.userService.redirectUri = this.router.url;
-                this.router.navigate(['/login']);
-            }
-        })
+        }
+        if (user.isVerified) {
+          return true;
+        }
+        console.log('url', this.router.url);
+        this.userService.redirectUri = this.router.url;
+        this.router.navigate(['/verify']);
+        return false;
+      }),
+      tap(loggedIn => {
+          if (!loggedIn) {
+              this.userService.redirectUri = this.router.url;
+              this.router.navigate(['/login']);
+          }
+      })
     )
+
   }
+  
 }
