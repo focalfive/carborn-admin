@@ -32,7 +32,7 @@
               "@firebase/remote-config",
               "@firebase/util"
             ],
-            "outputPath": "dist/carborn-admin",
+            "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
